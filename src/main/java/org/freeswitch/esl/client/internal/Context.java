@@ -52,6 +52,17 @@ public class Context implements IModEslApi {
 	}
 
 	/**
+	 * Sends a mod_event_socket command to FreeSWITCH server asynchronously.
+	 *
+	 * @param command a mod_event_socket command to send
+	 * @return a CompletableFuture that will be completed with the EslMessage response
+	 */
+	public CompletableFuture<EslMessage> sendCommandAsync(String command) {
+		checkArgument(!isNullOrEmpty(command), "command cannot be null or empty");
+		return handler.sendApiSingleLineCommand(channel, command.toLowerCase().trim());
+	}
+
+	/**
 	 * Sends a FreeSWITCH API command to the server and blocks, waiting for an immediate response from the
 	 * server.
 	 * <p/>
